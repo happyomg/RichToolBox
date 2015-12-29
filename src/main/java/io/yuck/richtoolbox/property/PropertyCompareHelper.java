@@ -13,11 +13,11 @@ import java.util.Set;
 /**
  * Created by yuck on 2015/12/29.
  */
-public class PropertyHelper<T> {
+public class PropertyCompareHelper<T> {
     private final Map<String, IValueTranslater> valueTranslaterMap;
     private final Set<String> ignoreFields;
 
-    private PropertyHelper(Set<String> ignoreFields, Map<String, IValueTranslater> valueTranslaterMap) {
+    private PropertyCompareHelper(Set<String> ignoreFields, Map<String, IValueTranslater> valueTranslaterMap) {
         this.ignoreFields = ignoreFields;
         this.valueTranslaterMap = valueTranslaterMap;
     }
@@ -68,9 +68,9 @@ public class PropertyHelper<T> {
             return this;
         }
 
-        public <N> PropertyHelper build() {
-            PropertyHelper<N> propertyHelper = new PropertyHelper<>(ignoreFields, valueTranslaterMap);
-            return propertyHelper;
+        public <N> PropertyCompareHelper build() {
+            PropertyCompareHelper<N> propertyCompareHelper = new PropertyCompareHelper<>(ignoreFields, valueTranslaterMap);
+            return propertyCompareHelper;
         }
     }
 }

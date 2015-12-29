@@ -7,8 +7,8 @@ import java.util.Map;
  */
 public class Example {
     public static void main(String[] args) {
-        PropertyHelper.Builder builder = new PropertyHelper.Builder();
-        PropertyHelper<Integer> build = builder.<Integer>build();
+        PropertyCompareHelper.Builder builder = new PropertyCompareHelper.Builder();
+        PropertyCompareHelper<Integer> build = builder.<Integer>build();
         Map<String, String[]> modifiedProperties = build.getModifiedProperties(1, 2);
         System.out.println(modifiedProperties);
     }
