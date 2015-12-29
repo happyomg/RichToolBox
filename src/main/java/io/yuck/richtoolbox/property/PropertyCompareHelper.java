@@ -1,5 +1,6 @@
 package io.yuck.richtoolbox.property;
 
+import io.yuck.richtoolbox.property.comparator.IFieldComparator;
 import io.yuck.richtoolbox.property.translater.IValueTranslater;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.map.HashedMap;
@@ -24,24 +25,30 @@ public class PropertyCompareHelper<T> {
 
     //TODO
     public Map<String, String[]> getModifiedProperties(T oldObj, T newObj) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        Map<String, String[]> modifiedProperties = new HashedMap();
         PropertyDescriptor[] propertyDescriptors = PropertyUtils.getPropertyDescriptors(oldObj.getClass());
         for (PropertyDescriptor descriptor : propertyDescriptors) {
-            String name = descriptor.getName();
-            if ("class".equals(name)) {
+            String fieldName = descriptor.getName();
+            if ("class".equals(fieldName)) {
                 continue;
             }
-            if (ignoreFields.contains(name)) {
+            if (ignoreFields.contains(fieldName)) {
                 continue;
             }
-            Object oldValue = PropertyUtils.getProperty(oldObj, name);
-            Object newValue = PropertyUtils.getProperty(newObj, name);
-            if (valueTranslaterMap.containsKey(name)) {
-                IValueTranslater valueTranslater = valueTranslaterMap.get(name);
-                oldValue = valueTranslater.translateValue(oldValue);
-                newValue = valueTranslater.translateValue(newValue);
+            Object oldValue = PropertyUtils.getProperty(oldObj, fieldName);
+            Object newValue = PropertyUtils.getProperty(newObj, fieldName);
+            if (valueTranslaterMap.containsKey(fieldName)) {
+                IValueTranslater valueTranslater = valueTranslaterMap.get(fieldName);
+                oldValue = valueTranslater.translateValue(fieldName, oldValue);
+                newValue = valueTranslater.translateValue(fieldName, newValue);
+            }
+            if (oldValue instanceof IFieldComparator) {
+
+            }else{
+
             }
         }
-        return null;
+        return modifiedProperties;
     }
 
 
