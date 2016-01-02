@@ -21,6 +21,9 @@ public class DateValueTranslater implements IValueTranslater {
 
     @Override
     public Object translateValue(String fieldName, Object value) {
+        if (value == null) {
+            return null;
+        }
         return simpleDateFormat.format(value);
     }
 }
