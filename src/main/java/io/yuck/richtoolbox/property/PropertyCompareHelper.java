@@ -1,6 +1,7 @@
 package io.yuck.richtoolbox.property;
 
 import io.yuck.richtoolbox.property.comparator.IFieldComparator;
+import io.yuck.richtoolbox.property.comparator.SimpleFieldComparator;
 import io.yuck.richtoolbox.property.translater.IValueTranslater;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.map.HashedMap;
@@ -27,8 +28,9 @@ public class PropertyCompareHelper<T> {
     public Map<String, String[]> getModifiedProperties(T oldObj, T newObj) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Map<String, String[]> modifiedProperties = new HashedMap();
         PropertyDescriptor[] propertyDescriptors = PropertyUtils.getPropertyDescriptors(oldObj.getClass());
+        String fieldName;
         for (PropertyDescriptor descriptor : propertyDescriptors) {
-            String fieldName = descriptor.getName();
+            fieldName = descriptor.getName();
             if ("class".equals(fieldName)) {
                 continue;
             }
@@ -42,11 +44,9 @@ public class PropertyCompareHelper<T> {
                 oldValue = valueTranslater.translateValue(fieldName, oldValue);
                 newValue = valueTranslater.translateValue(fieldName, newValue);
             }
-            if (oldValue instanceof IFieldComparator) {
 
-            }else{
+            boolean equals = String.class.equals(descriptor.getPropertyType());
 
-            }
         }
         return modifiedProperties;
     }
