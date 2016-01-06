@@ -76,7 +76,7 @@ public class PropertyCompareHelper<T> {
     }
 
 
-    public static class Builder {
+    public static class Builder<N> {
         private Map<String, IValueTranslater> valueTranslaterMap;
         private Map<String, IFieldComparator> fieldComparatorMap;
         private Set<String> ignoreFields;
@@ -111,7 +111,7 @@ public class PropertyCompareHelper<T> {
         }
 
 
-        public <N> PropertyCompareHelper build() {
+        public PropertyCompareHelper<N> build() {
             PropertyCompareHelper<N> propertyCompareHelper = new PropertyCompareHelper<>(ignoreFields, valueTranslaterMap, fieldComparatorMap);
             return propertyCompareHelper;
         }
